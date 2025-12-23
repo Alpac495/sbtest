@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { redirect } from "next/navigation"; // 💡 리디렉션을 위한 Next.js 서버 유틸리티
 import { headers } from "next/headers"; // 💡 현재 경로를 확인하기 위한 서버 유틸리티
 import { handleLoginChk } from "@/app/serveraction/loginchk/loginchkaction";
+import Header from '@/app/components/header/header'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,13 +32,17 @@ export default async function RootLayout({
   // 4. 로그인 체크 및 리디렉션 로직을 실행합니다.
   // userId가 null이고 (로그아웃 상태) 현재 경로가 로그인 페이지가 아니라면 리디렉션!
   if (!userId && pathname !== loginPath) {
-    // redirect()는 내부적으로 Next.js에게 리디렉션 응답을 보내도록 지시합니다.
     redirect(loginPath);
   }
 
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Header/>
+        <main>
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
